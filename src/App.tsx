@@ -32,13 +32,20 @@ function App() {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
+        fontFamily: "Roboto",
       }}
     >
       <Button variant="contained" onClick={onCreatePatient}>
         Create patient
       </Button>
 
-      {modalOpen ? <CreatePatientModal onSavePatient={onSavePatient} /> : null}
+      {modalOpen ? (
+        <CreatePatientModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          onSavePatient={onSavePatient}
+        />
+      ) : null}
 
       {patientData ? <PatientData data={patientData} /> : null}
     </Box>
