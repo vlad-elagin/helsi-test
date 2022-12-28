@@ -20,6 +20,11 @@ enum Gender {
   Female = "FEMALE",
 }
 
+enum DesiredCommunication {
+  ByPhone = "BY_PHONE",
+  ByEmail = "BY_EMAIL",
+}
+
 const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
   onSavePatient,
   ...modalProps
@@ -39,16 +44,17 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
             >
               Дані пацієнта
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ marginBottom: 2 }}>
               <Grid xs={12} md={6} lg={4}>
-                <Input label="Прізвище*" />
+                <Input label="Прізвище*" InputLabelProps={{ shrink: true }} />
               </Grid>
               <Grid xs={12} md={6} lg={4}>
-                <Input label="Імʼя*" />
+                <Input label="Імʼя*" InputLabelProps={{ shrink: true }} />
               </Grid>
               <Grid xs={12} md={6} lg={4}>
                 <Input
                   label="По батькові*"
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -61,6 +67,7 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
               <Grid xs={12} md={6} lg={4}>
                 <Input
                   label="РНОКПП (ІПН)*"
+                  InputLabelProps={{ shrink: true }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -71,11 +78,16 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
                 />
               </Grid>
               <Grid xs={12} md={6} lg={4}>
-                <Input label="Дата народження*" type="date" />
+                <Input
+                  label="Дата народження*"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                />
               </Grid>
               <Grid xs={12} md={6} lg={4}>
                 <Input
                   label="Стать*"
+                  InputLabelProps={{ shrink: true }}
                   select
                   SelectProps={{
                     native: true,
@@ -87,6 +99,49 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
                   <option value={Gender.Male}>Чоловіча</option>
                   <option value={Gender.Female}>Жіноча</option>
                 </Input>
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input label="Країна народження*" />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input label="Місце народження" />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Бажаний спосіб звʼязку з пацієнтом*"
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                  InputLabelProps={{ shrink: true }}
+                >
+                  <option disabled selected>
+                    - Вибрати -
+                  </option>
+                  <option value={DesiredCommunication.ByEmail}>
+                    Електронною поштою
+                  </option>
+                  <option value={DesiredCommunication.ByPhone}>
+                    Телефоном
+                  </option>
+                </Input>
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input label="Секретне слово (не менше 6 символів)" />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Контактний номер телефону"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="+38(___)___-__-__"
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Адреса електронної пошти"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="example@example.com"
+                />
               </Grid>
             </Grid>
           </Box>
