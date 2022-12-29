@@ -7,8 +7,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import CreatePatientModal from "components/CreatePatientModal";
-import PatientData from "components/PatientData";
+import { CreatePatient } from "features/CreatePatient";
+import { PatientData } from "features/DisplayPatient";
+import { Modal } from "shared/ui";
 
 function App() {
   // root-level component ideally shouldn't contain such kind of logic in my opinion
@@ -40,11 +41,13 @@ function App() {
       </Button>
 
       {modalOpen ? (
-        <CreatePatientModal
+        <Modal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
-          onSavePatient={onSavePatient}
-        />
+          title="Створення персони"
+        >
+          <CreatePatient onSavePatient={onSavePatient} />
+        </Modal>
       ) : null}
 
       {patientData ? <PatientData data={patientData} /> : null}

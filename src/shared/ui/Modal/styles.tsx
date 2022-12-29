@@ -10,7 +10,7 @@ export const modalStyles: SxProps = {
   boxShadow: 24,
   fontFamily: "Roboto",
 };
-export const modalHeaderStyles = {
+export const modalHeaderStyles: SxProps = {
   p: 2,
   bgcolor: "info.main",
   fontSize: "24px",
@@ -18,13 +18,6 @@ export const modalHeaderStyles = {
   display: "flex",
   alignItems: "center",
 };
-export const modalBodyStyles = {
+export const modalBodyStyles: SxProps = {
   p: 2,
-};
-
-export const modalFooterStyles = {
-  p: 2,
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
 };

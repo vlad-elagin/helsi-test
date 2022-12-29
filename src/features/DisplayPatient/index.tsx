@@ -4,8 +4,6 @@ interface IPatientDataProps {
   data: string;
 }
 
-const PatientData: React.FC<IPatientDataProps> = () => {
+export const PatientData: React.FC<IPatientDataProps> = () => {
   return <div>patient data</div>;
 };
-
-export default PatientData;
