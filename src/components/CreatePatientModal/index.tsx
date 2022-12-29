@@ -7,22 +7,19 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import InputAdornment from "@mui/material/InputAdornment";
 import Switch from "@mui/material/Switch";
+import Button from "@mui/material/Button";
 
-import { modalStyles, modalHeaderStyles, modalBodyStyles } from "./styles";
+import {
+  modalStyles,
+  modalHeaderStyles,
+  modalBodyStyles,
+  modalFooterStyles,
+} from "./styles";
 import Input from "components/Input";
+import { Gender, DesiredCommunication, DocumentType } from "./types";
 
 interface ICreatePatientModalProps extends Omit<ModalProps, "children"> {
   onSavePatient: (data: string) => void;
-}
-
-enum Gender {
-  Male = "MALE",
-  Female = "FEMALE",
-}
-
-enum DesiredCommunication {
-  ByPhone = "BY_PHONE",
-  ByEmail = "BY_EMAIL",
 }
 
 const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
@@ -127,7 +124,7 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
                 </Input>
               </Grid>
               <Grid xs={12} md={6}>
-                <Input label="Секретне слово (не менше 6 символів)" />
+                <Input label="Секретне слово (не менше 6 символів)*" />
               </Grid>
               <Grid xs={12} md={6}>
                 <Input
@@ -153,7 +150,74 @@ const CreatePatientModal: React.FC<ICreatePatientModalProps> = ({
             >
               Документ, що посвідчує особу
             </Typography>
+
+            <Grid container spacing={2}>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Тип документу*"
+                  select
+                  SelectProps={{
+                    native: true,
+                  }}
+                >
+                  <option disabled selected>
+                    - Вибрати -
+                  </option>
+                  <option value={DocumentType.AdditionalProtectionPerson}>
+                    Посвідчення особи, яка потребує додаткового захисту
+                  </option>
+                  <option value={DocumentType.IDPassport}>
+                    Паспорт (ID-картка)
+                  </option>
+                  <option value={DocumentType.PaperPassport}>
+                    Паспорт (книжечка)
+                  </option>
+                  <option value={DocumentType.PermanentResidencyUkraine}>
+                    Посвідка на постійне проживання в Україні
+                  </option>
+                  <option value={DocumentType.Refugee}>Посвідка біженця</option>
+                  <option value={DocumentType.PermanentResidency}>
+                    Посвідка на проживання
+                  </option>
+                  <option value={DocumentType.TemporaryResidencyUkraine}>
+                    Тимчасове посвідчення громадянина України
+                  </option>
+                </Input>
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input label="Серія (за наявності), номер" />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Коли видано*"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Діє до"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input label="Ким видано*" InputLabelProps={{ shrink: true }} />
+              </Grid>
+              <Grid xs={12} md={6}>
+                <Input
+                  label="Запис № (УНЗР)"
+                  InputLabelProps={{ shrink: true }}
+                  placeholder="РРРРММДД-ХХХХХ"
+                />
+              </Grid>
+            </Grid>
           </Box>
+        </Box>
+
+        <Box sx={modalFooterStyles}>
+          <Button>Скасувати</Button>
+          <Button variant="contained">Створити</Button>
         </Box>
       </Box>
     </Modal>

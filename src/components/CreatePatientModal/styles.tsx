@@ -21,3 +21,10 @@ export const modalHeaderStyles = {
 export const modalBodyStyles = {
   p: 2,
 };
+
+export const modalFooterStyles = {
+  p: 2,
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+};
