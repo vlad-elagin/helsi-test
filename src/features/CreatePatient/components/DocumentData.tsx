@@ -3,7 +3,11 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
-import { documentTypeOptions } from "../utils";
+import {
+  documentNumberMask,
+  parseInputValue,
+  documentTypeOptions,
+} from "../utils";
 
 export const DocumentDataForm: React.FC = () => {
   return (
@@ -56,7 +60,10 @@ export const DocumentDataForm: React.FC = () => {
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Field name="documentNumber">
+          <Field
+            name="documentNumber"
+            parse={parseInputValue(documentNumberMask, 14)}
+          >
             {(props) => (
               <Input
                 label="Запис № (УНЗР)"

@@ -3,7 +3,12 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
-import { desiredCommunicationWayOptions, genderOptions } from "../utils";
+import {
+  desiredCommunicationWayOptions,
+  genderOptions,
+  phoneNumberMask,
+  parseInputValue,
+} from "../utils";
 
 export const PatientDataForm: React.FC = () => {
   const onSwitchToggle = () => {};
@@ -106,7 +111,10 @@ export const PatientDataForm: React.FC = () => {
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Field name="phoneNumber">
+          <Field
+            name="phoneNumber"
+            parse={parseInputValue(phoneNumberMask, 17)}
+          >
             {(props) => (
               <Input
                 label="Контактний номер телефону"
