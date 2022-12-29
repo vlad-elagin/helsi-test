@@ -40,6 +40,10 @@ export const DocumentDataForm: React.FC = () => {
                 label="Коли видано*"
                 type="date"
                 shrinkLabel
+                inputProps={{
+                  min: "1900-01-01",
+                  max: new Date().toISOString().split("T")[0],
+                }}
                 {...props.input}
               />
             )}
@@ -48,7 +52,16 @@ export const DocumentDataForm: React.FC = () => {
         <Grid xs={12} md={6}>
           <Field name="documentExpireDate">
             {(props) => (
-              <Input label="Діє до" type="date" shrinkLabel {...props.input} />
+              <Input
+                label="Діє до"
+                type="date"
+                shrinkLabel
+                inputProps={{
+                  min: "1900-01-01",
+                  max: "2100-01-01",
+                }}
+                {...props.input}
+              />
             )}
           </Field>
         </Grid>

@@ -19,25 +19,25 @@ export enum DocumentType {
 export type IPatientPersonalData = {
   lastName: string;
   firstName: string;
-  patronymic: string;
-  VATNumber: string;
+  patronymic?: string;
+  VATNumber?: string;
   birthDate: string;
   gender: Gender;
   birthCountry: string;
   birthPlace: string;
   desiredCommunicationWay: DesiredCommunication;
   secretWord: string;
-  phoneNumber: string;
-  emailAddress: string;
+  phoneNumber?: string;
+  emailAddress?: string;
 };
 
 export type IPatientDocumentData = {
   documentType: DocumentType;
   documentSeries: string;
   documentIssueDate: string;
-  documentExpireDate: string;
+  documentExpireDate?: string;
   documentOrigin: string;
-  documentNumber: string;
+  documentNumber?: string;
 };
 
 export type IPatientData = IPatientPersonalData & IPatientDocumentData;
