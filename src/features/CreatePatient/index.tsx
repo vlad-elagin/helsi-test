@@ -1,10 +1,10 @@
 import React from "react";
-import { Form, Field } from "react-final-form";
+import { Form } from "react-final-form";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
+import { IPatientData } from "shared/types";
 import { DocumentDataForm, PatientDataForm } from "./components";
-import { IFormSchema } from "./types";
 
 interface ICreatePatientProps {
   onSavePatient: (data: string) => void;
@@ -13,12 +13,12 @@ interface ICreatePatientProps {
 export const CreatePatient: React.FC<ICreatePatientProps> = ({
   onSavePatient,
 }) => {
-  const onSubmit = (values: IFormSchema) => {
+  const onSubmit = (values: IPatientData) => {
     onSavePatient(JSON.stringify(values));
   };
 
   return (
-    <Form<IFormSchema> onSubmit={onSubmit}>
+    <Form<IPatientData> onSubmit={onSubmit}>
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <PatientDataForm />

@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
+import { Field } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
 import { Gender, DesiredCommunication } from "shared/types";
@@ -11,78 +12,134 @@ export const PatientDataForm: React.FC = () => {
     <FormSection label="Дані пацієнта">
       <Grid container spacing={2}>
         <Grid xs={12} md={6} lg={4}>
-          <Input label="Прізвище*" shrinkLabel />
+          <Field name="lastName">
+            {(props) => (
+              <Input label="Прізвище*" shrinkLabel {...props.input} />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Input label="Імʼя*" shrinkLabel />
+          <Field name="firstName">
+            {(props) => <Input label="Імʼя*" shrinkLabel {...props.input} />}
+          </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Input
-            label="По батькові*"
-            shrinkLabel
-            onSwitchToggle={onSwitchToggle}
-          />
+          <Field name="patronymic">
+            {(props) => (
+              <Input
+                label="По батькові*"
+                shrinkLabel
+                onSwitchToggle={onSwitchToggle}
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Input
-            label="РНОКПП (ІПН)*"
-            shrinkLabel
-            onSwitchToggle={onSwitchToggle}
-          />
+          <Field name="VATNumber">
+            {(props) => (
+              <Input
+                label="РНОКПП (ІПН)*"
+                shrinkLabel
+                onSwitchToggle={onSwitchToggle}
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Input label="Дата народження*" type="date" shrinkLabel />
+          <Field name="birthDate">
+            {(props) => (
+              <Input
+                label="Дата народження*"
+                type="date"
+                shrinkLabel
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Input
-            label="Стать*"
-            shrinkLabel
-            select
-            selectOptions={[
-              { label: "Чоловіча", value: Gender.Male },
-              { label: "Жіноча", value: Gender.Female },
-            ]}
-          />
+          <Field name="gender">
+            {(props) => (
+              <Input
+                label="Стать*"
+                shrinkLabel
+                select
+                selectOptions={[
+                  { label: "Чоловіча", value: Gender.Male },
+                  { label: "Жіноча", value: Gender.Female },
+                ]}
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input label="Країна народження*" />
+          <Field name="birthCountry">
+            {(props) => <Input label="Країна народження*" {...props.input} />}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input label="Місце народження" />
+          <Field name="birthPlace">
+            {(props) => <Input label="Місце народження" {...props.input} />}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input
-            label="Бажаний спосіб звʼязку з пацієнтом*"
-            select
-            shrinkLabel
-            selectOptions={[
-              {
-                label: "Електронною поштою",
-                value: DesiredCommunication.ByEmail,
-              },
-              {
-                label: "Телефоном",
-                value: DesiredCommunication.ByPhone,
-              },
-            ]}
-          />
+          <Field name="desiredCommunicationWay">
+            {(props) => (
+              <Input
+                label="Бажаний спосіб звʼязку з пацієнтом*"
+                select
+                shrinkLabel
+                selectOptions={[
+                  {
+                    label: "Електронною поштою",
+                    value: DesiredCommunication.ByEmail,
+                  },
+                  {
+                    label: "Телефоном",
+                    value: DesiredCommunication.ByPhone,
+                  },
+                ]}
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input label="Секретне слово (не менше 6 символів)*" />
+          <Field name="secretWord">
+            {(props) => (
+              <Input
+                label="Секретне слово (не менше 6 символів)*"
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input
-            label="Контактний номер телефону"
-            shrinkLabel
-            placeholder="+38(___)___-__-__"
-          />
+          <Field name="phoneNumber">
+            {(props) => (
+              <Input
+                label="Контактний номер телефону"
+                shrinkLabel
+                placeholder="+38(___)___-__-__"
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Input
-            label="Адреса електронної пошти"
-            shrinkLabel
-            placeholder="example@example.com"
-          />
+          <Field name="emailAddress">
+            {(props) => (
+              <Input
+                label="Адреса електронної пошти"
+                shrinkLabel
+                placeholder="example@example.com"
+                {...props.input}
+              />
+            )}
+          </Field>
         </Grid>
       </Grid>
     </FormSection>
