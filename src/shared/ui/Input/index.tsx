@@ -47,10 +47,11 @@ export const Input: React.FC<IInputProps> = ({
       size="small"
       variant="standard"
       fullWidth
+      defaultValue=""
     >
       {inputProps.select && selectOptions ? (
         <>
-          <option disabled selected>
+          <option disabled value="">
             - Вибрати -
           </option>
           {selectOptions.map((opt) => (
