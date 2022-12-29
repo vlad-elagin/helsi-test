@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
-import { Gender, DesiredCommunication } from "shared/types";
+import { desiredCommunicationWayOptions, genderOptions } from "../utils";
 
 export const PatientDataForm: React.FC = () => {
   const onSwitchToggle = () => {};
@@ -66,10 +66,7 @@ export const PatientDataForm: React.FC = () => {
                 label="Стать*"
                 shrinkLabel
                 select
-                selectOptions={[
-                  { label: "Чоловіча", value: Gender.Male },
-                  { label: "Жіноча", value: Gender.Female },
-                ]}
+                selectOptions={genderOptions}
                 {...props.input}
               />
             )}
@@ -92,16 +89,7 @@ export const PatientDataForm: React.FC = () => {
                 label="Бажаний спосіб звʼязку з пацієнтом*"
                 select
                 shrinkLabel
-                selectOptions={[
-                  {
-                    label: "Електронною поштою",
-                    value: DesiredCommunication.ByEmail,
-                  },
-                  {
-                    label: "Телефоном",
-                    value: DesiredCommunication.ByPhone,
-                  },
-                ]}
+                selectOptions={desiredCommunicationWayOptions}
                 {...props.input}
               />
             )}

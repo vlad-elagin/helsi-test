@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
-import { DocumentType } from "shared/types";
+import { documentTypeOptions } from "../utils";
 
 export const DocumentDataForm: React.FC = () => {
   return (
@@ -16,37 +16,7 @@ export const DocumentDataForm: React.FC = () => {
                 label="Тип документу*"
                 select
                 shrinkLabel
-                selectOptions={[
-                  {
-                    label:
-                      "Посвідчення особи, яка потребує додаткового захисту",
-                    value: DocumentType.AdditionalProtectionPerson,
-                  },
-                  {
-                    label: "Паспорт (ID-картка)",
-                    value: DocumentType.IDPassport,
-                  },
-                  {
-                    label: "Паспорт (книжечка)",
-                    value: DocumentType.PaperPassport,
-                  },
-                  {
-                    label: "Посвідка на постійне проживання в Україні",
-                    value: DocumentType.PermanentResidencyUkraine,
-                  },
-                  {
-                    label: "Посвідка на проживання",
-                    value: DocumentType.PermanentResidency,
-                  },
-                  {
-                    label: "Посвідка біженця",
-                    value: DocumentType.Refugee,
-                  },
-                  {
-                    label: "Тимчасове посвідчення громадянина України",
-                    value: DocumentType.TemporaryResidencyUkraine,
-                  },
-                ]}
+                selectOptions={documentTypeOptions}
                 {...props.input}
               />
             )}
