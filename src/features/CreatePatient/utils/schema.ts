@@ -7,6 +7,7 @@ import {
   Gender,
   IPatientData,
 } from "shared/types";
+import { IFormSchema } from "../types";
 
 const fieldCantBeEmpty = "Поле не може бути пустим";
 
@@ -19,14 +20,19 @@ const dateSchema = yup
     "Некорректне значення, можливо вказати лише минулу дату"
   ) as unknown as RequiredStringSchema<string>;
 
-export const schema: yup.SchemaOf<IPatientData> = yup.object({
+const schema: yup.SchemaOf<IPatientData> = yup.object({
   lastName: yup.string().required(fieldCantBeEmpty),
   firstName: yup.string().required(fieldCantBeEmpty),
-  patronymic: yup.string().required(fieldCantBeEmpty),
-
-  // to do
-  VATNumber: yup.string(),
-
+  patronymic: yup
+    .string()
+    .when("$hasPatronymic", ([hasPatronymic], schema) =>
+      hasPatronymic ? schema.required(fieldCantBeEmpty) : schema
+    ),
+  VATNumber: yup
+    .string()
+    .when("$hasVATNumber", ([hasVATNumber], schema) =>
+      hasVATNumber ? schema.required(fieldCantBeEmpty) : schema
+    ),
   birthDate: dateSchema,
   gender: yup
     .string()
@@ -44,19 +50,23 @@ export const schema: yup.SchemaOf<IPatientData> = yup.object({
     ) as unknown as RequiredStringSchema<DesiredCommunication>,
   secretWord: yup.string().required(fieldCantBeEmpty).min(6),
 
-  // TODO set required based on selected communication way
   phoneNumber: yup
     .string()
-    .required(fieldCantBeEmpty)
     .matches(
       RegExp("\\+38\\(0\\d{2}\\)\\d{3}-\\d{2}-\\d{2}"),
       "Некорректний номер телефона. Приклад +38(066)999-88-77"
-    ),
-  // TODO set required based on selected communication way
+    )
+    .when("desiredCommunicationWay", {
+      is: DesiredCommunication.ByPhone,
+      then: (schema) => schema.required(fieldCantBeEmpty),
+    }),
   emailAddress: yup
     .string()
-    .required(fieldCantBeEmpty)
-    .email("Некорректна електронна адреса. Приклад john.doe@ukr.net"),
+    .email("Некорректна електронна адреса. Приклад john.doe@ukr.net")
+    .when("desiredCommunicationWay", {
+      is: DesiredCommunication.ByEmail,
+      then: (schema) => schema.required(fieldCantBeEmpty),
+    }),
 
   documentType: yup
     .string()
@@ -73,8 +83,28 @@ export const schema: yup.SchemaOf<IPatientData> = yup.object({
       "Некорректний тип документу"
     ) as unknown as RequiredStringSchema<DocumentType>,
 
-  // TODO different validation rules based on document type
-  documentSeries: yup.string().required(fieldCantBeEmpty),
+  documentSeries: yup
+    .string()
+    .required(fieldCantBeEmpty)
+    .when("documentType", ([documentType], schema) => {
+      switch (documentType) {
+        case DocumentType.PaperPassport:
+          return schema.matches(
+            RegExp("[А-ЯҐЄІЇ]{2}\\d{6}"),
+            "Невірний формат, серія паспорту книжечки має містити 2 киріллічні букви та 6 цифр."
+          );
+        case DocumentType.IDPassport:
+          return schema.matches(
+            RegExp("\\d{13}"),
+            "Невірний формат, номер ID картки має містити 13 цифр."
+          );
+        default:
+          return schema.matches(
+            RegExp("[А-ЯҐЄІЇ]{3}\\d{5,9}"),
+            "Невірний формат, номер документу має складатись з 3 кирілічних букв та 5-9 цифр."
+          );
+      }
+    }),
 
   documentIssueDate: dateSchema,
   documentExpireDate: yup
@@ -88,6 +118,23 @@ export const schema: yup.SchemaOf<IPatientData> = yup.object({
   documentNumber: yup
     .string()
     .matches(
-      RegExp("\\d{8}-\\d{5}", "Некорректний номер, приклад 19900101-12345")
+      RegExp("\\d{8}-\\d{5}"),
+      "Некорректний номер, приклад 19900101-12345"
     ),
 });
+
+export const validate = async (
+  values: IFormSchema,
+  context: { hasPatronymic: boolean; hasVATNumber: boolean }
+) => {
+  console.log("inner validation called with", values);
+
+  try {
+    await schema.validate(values, { abortEarly: false, context });
+  } catch (e: unknown) {
+    console.log(e);
+
+    // TODO stack errors
+    return {};
+  }
+};

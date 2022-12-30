@@ -24,4 +24,25 @@ export const parseInputValue = (pattern: string, maxLength: number) => {
   };
 };
 
+export const initialValues: IFormSchema = {
+  lastName: "",
+  firstName: "",
+  patronymic: "",
+  VATNumber: "",
+  birthDate: "",
+  gender: "",
+  birthCountry: "",
+  birthPlace: "",
+  desiredCommunicationWay: "",
+  secretWord: "",
+  phoneNumber: "",
+  emailAddress: "",
+  documentType: "",
+  documentSeries: "",
+  documentIssueDate: "",
+  documentExpireDate: "",
+  documentOrigin: "",
+  documentNumber: "",
+};
+
 export * from "./selectOptions";

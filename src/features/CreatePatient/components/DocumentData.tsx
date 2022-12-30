@@ -27,7 +27,10 @@ export const DocumentDataForm: React.FC = () => {
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
-          <Field name="documentSeries">
+          <Field<string>
+            name="documentSeries"
+            parse={(val) => val.toUpperCase()}
+          >
             {(props) => (
               <Input label="Серія (за наявності), номер" {...props.input} />
             )}

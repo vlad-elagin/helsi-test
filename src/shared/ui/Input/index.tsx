@@ -12,12 +12,14 @@ import {
 
 interface IInputProps extends StandardTextFieldProps {
   shrinkLabel?: boolean;
+  switchValue?: boolean;
   onSwitchToggle?: (toggled: boolean) => void;
   selectOptions?: Array<{ label: string; value: string }>;
 }
 
 export const Input: React.FC<IInputProps> = ({
   shrinkLabel,
+  switchValue,
   onSwitchToggle,
   selectOptions,
   ...inputProps
@@ -33,7 +35,7 @@ export const Input: React.FC<IInputProps> = ({
   const InputProps: Partial<InputProps> = {
     endAdornment: Boolean(onSwitchToggle) ? (
       <InputAdornment position="end">
-        <Switch size="small" />
+        <Switch size="small" value={switchValue} />
       </InputAdornment>
     ) : null,
   };

@@ -10,8 +10,24 @@ import {
   parseInputValue,
 } from "../utils";
 
-export const PatientDataForm: React.FC = () => {
-  const onSwitchToggle = () => {};
+type SwitchToggler = (val: boolean) => void;
+
+interface IPatientDataFormProps {
+  hasPatronymic: boolean;
+  setHasPatronymic: SwitchToggler;
+  hasVATNumber: boolean;
+  setHasVATNumber: SwitchToggler;
+}
+
+export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
+  hasPatronymic,
+  hasVATNumber,
+  setHasPatronymic,
+  setHasVATNumber,
+}) => {
+  const onSwitchToggle = (func: SwitchToggler) => {
+    return (val: boolean) => func(val);
+  };
 
   return (
     <FormSection label="Дані пацієнта">
@@ -34,7 +50,8 @@ export const PatientDataForm: React.FC = () => {
               <Input
                 label="По батькові*"
                 shrinkLabel
-                onSwitchToggle={onSwitchToggle}
+                switchValue={hasPatronymic}
+                onSwitchToggle={onSwitchToggle(setHasPatronymic)}
                 {...props.input}
               />
             )}
@@ -46,7 +63,8 @@ export const PatientDataForm: React.FC = () => {
               <Input
                 label="РНОКПП (ІПН)*"
                 shrinkLabel
-                onSwitchToggle={onSwitchToggle}
+                switchValue={hasVATNumber}
+                onSwitchToggle={onSwitchToggle(setHasVATNumber)}
                 {...props.input}
               />
             )}

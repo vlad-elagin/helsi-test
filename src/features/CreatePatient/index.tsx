@@ -5,7 +5,8 @@ import Button from "@mui/material/Button";
 
 import { DocumentDataForm, PatientDataForm } from "./components";
 import { IFormSchema } from "./types";
-import { defaultFormState } from "./utils";
+import { initialValues } from "./utils";
+import { validate } from "./utils/schema";
 
 interface ICreatePatientProps {
   onSavePatient: (data: string) => void;
@@ -15,16 +16,36 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
   onSavePatient,
 }) => {
   const onSubmit = (values: IFormSchema) => {
+    console.log("submitting!");
     console.log(values);
 
     onSavePatient(JSON.stringify(values));
   };
 
+  const [hasPatronymic, setHasPatronymic] = React.useState(true);
+  const [hasVATNumber, setHasVATNumber] = React.useState(true);
+
   return (
-    <Form<IFormSchema> onSubmit={onSubmit} initialValues={defaultFormState}>
+    <Form<IFormSchema>
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validate={(values) => {
+        console.log("outer validation called");
+
+        return validate(values, {
+          hasPatronymic,
+          hasVATNumber,
+        });
+      }}
+    >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <PatientDataForm />
+          <PatientDataForm
+            hasPatronymic={hasPatronymic}
+            setHasPatronymic={setHasPatronymic}
+            hasVATNumber={hasVATNumber}
+            setHasVATNumber={setHasVATNumber}
+          />
 
           <DocumentDataForm />
 
