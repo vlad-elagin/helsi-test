@@ -37,7 +37,10 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
     ),
   VATNumber: yup
     .string()
-    .matches(RegExp("\\d{10}"), "ІПН має складатися з 10 цифр")
+    .matches(RegExp("\\d{10}"), {
+      message: "ІПН має складатися з 10 цифр",
+      excludeEmptyString: true,
+    })
     .when("$hasVATNumber", (hasVATNumber, schema) =>
       hasVATNumber ? schema.required(fieldCantBeEmpty) : schema
     ),
