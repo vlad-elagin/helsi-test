@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import { Field } from "react-final-form";
+import { Field, useField } from "react-final-form";
 
 import { Input, FormSection } from "shared/ui";
 import {
@@ -10,6 +10,17 @@ import {
 } from "../utils";
 
 export const DocumentDataForm: React.FC = () => {
+  const [formEnabled, setFormEnabled] = React.useState(false);
+  const {
+    input: { value: documentType },
+  } = useField("documentType");
+
+  React.useEffect(() => {
+    if (documentType && !formEnabled) {
+      setFormEnabled(true);
+    }
+  }, [documentType, formEnabled]);
+
   return (
     <FormSection label=" Документ, що посвідчує особу">
       <Grid container spacing={2}>
@@ -37,6 +48,7 @@ export const DocumentDataForm: React.FC = () => {
                 label="Серія (за наявності), номер"
                 {...props.input}
                 meta={props.meta}
+                disabled={!formEnabled}
               />
             )}
           </Field>
@@ -54,6 +66,7 @@ export const DocumentDataForm: React.FC = () => {
                 }}
                 {...props.input}
                 meta={props.meta}
+                disabled={!formEnabled}
               />
             )}
           </Field>
@@ -71,6 +84,7 @@ export const DocumentDataForm: React.FC = () => {
                 }}
                 {...props.input}
                 meta={props.meta}
+                disabled={!formEnabled}
               />
             )}
           </Field>
@@ -83,6 +97,7 @@ export const DocumentDataForm: React.FC = () => {
                 shrinkLabel
                 {...props.input}
                 meta={props.meta}
+                disabled={!formEnabled}
               />
             )}
           </Field>
@@ -99,6 +114,7 @@ export const DocumentDataForm: React.FC = () => {
                 placeholder="РРРРММДД-ХХХХХ"
                 {...props.input}
                 meta={props.meta}
+                disabled={!formEnabled}
               />
             )}
           </Field>

@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
+import { patternize } from "string-patternizer";
 
 import { Input, FormSection, InputWithSwitch } from "shared/ui";
 import {
@@ -76,7 +77,10 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
           </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
-          <Field name="VATNumber">
+          <Field<string>
+            name="VATNumber"
+            parse={(val) => patternize("dddddddddd", val)}
+          >
             {(props) => (
               <InputWithSwitch
                 label="РНОКПП (ІПН)*"
