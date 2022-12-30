@@ -17,15 +17,14 @@ export const Input: React.FC<IInputProps> = ({
     native: inputProps.select,
   };
 
+  const shouldShowError =
+    (meta.modified || meta.submitFailed) && Boolean(meta.error);
+
   return (
     <TextField
       {...inputProps}
-      error={meta.modified && Boolean(meta.error)}
-      helperText={
-        meta.modified && Boolean(meta.error)
-          ? meta.error
-          : inputProps.helperText
-      }
+      error={shouldShowError}
+      helperText={shouldShowError ? meta.error : inputProps.helperText}
       InputLabelProps={InputLabelProps}
       SelectProps={SelectProps}
       size="small"
