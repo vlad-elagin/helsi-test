@@ -23,6 +23,7 @@ function App() {
 
   const onSavePatient = (data: string) => {
     setPatientData(data);
+    setModalOpen(false);
   };
 
   return (
@@ -30,13 +31,18 @@ function App() {
       className="App"
       sx={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
         fontFamily: "Roboto",
       }}
     >
-      <Button variant="contained" onClick={onCreatePatient}>
+      <Button
+        variant="contained"
+        onClick={onCreatePatient}
+        sx={{ marginBottom: 3 }}
+      >
         Create patient
       </Button>
 
@@ -46,7 +52,10 @@ function App() {
           onClose={() => setModalOpen(false)}
           title="Створення персони"
         >
-          <CreatePatient onSavePatient={onSavePatient} />
+          <CreatePatient
+            onSavePatient={onSavePatient}
+            onClose={() => setModalOpen(false)}
+          />
         </Modal>
       ) : null}
 

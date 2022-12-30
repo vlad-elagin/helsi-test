@@ -21,6 +21,7 @@ export const InputWithSwitch: React.FC<IWithSwitchProps> = ({
     } else {
       setReadOnly(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [switchValue]);
 
   const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,10 +10,12 @@ import { validate } from "./utils/schema";
 
 interface ICreatePatientProps {
   onSavePatient: (data: string) => void;
+  onClose: () => void;
 }
 
 export const CreatePatient: React.FC<ICreatePatientProps> = ({
   onSavePatient,
+  onClose,
 }) => {
   const onSubmit = (values: IFormSchema) => {
     console.log("submitting!");
@@ -53,7 +55,9 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
               justifyContent: "flex-end",
             }}
           >
-            <Button>Скасувати</Button>
+            <Button sx={{ marginRight: 1 }} onClick={onClose}>
+              Скасувати
+            </Button>
             <Button variant="contained" type="submit">
               Створити
             </Button>

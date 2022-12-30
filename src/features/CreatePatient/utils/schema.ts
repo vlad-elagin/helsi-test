@@ -15,6 +15,8 @@ const desiredCommunicationFieldCantBeEmpty =
 
 const dateSchema = yup
   .date()
+  .nullable()
+  .transform((curr, orig) => (orig === "" ? null : curr))
   .required(fieldCantBeEmpty)
   .min("1900-01-01", "Некорректне значення, має бути 1900-01-01 або пізніше")
   .max(
@@ -23,6 +25,9 @@ const dateSchema = yup
   ) as unknown as RequiredStringSchema<string>;
 
 const schema: yup.SchemaOf<IPatientData> = yup.object({
+  /**
+   * Basic info
+   */
   lastName: yup.string().required(fieldCantBeEmpty),
   firstName: yup.string().required(fieldCantBeEmpty),
   patronymic: yup
@@ -45,20 +50,27 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
     ) as unknown as RequiredStringSchema<Gender>,
   birthCountry: yup.string().required(fieldCantBeEmpty),
   birthPlace: yup.string().required(fieldCantBeEmpty),
+
+  /**
+   * Contacts
+   */
   desiredCommunicationWay: yup
     .string()
     .oneOf(
       [DesiredCommunication.ByPhone, DesiredCommunication.ByEmail],
       "Некорректний тип звʼязку"
     ) as unknown as RequiredStringSchema<DesiredCommunication>,
-  secretWord: yup.string().required(fieldCantBeEmpty).min(6),
+  secretWord: yup
+    .string()
+    .required(fieldCantBeEmpty)
+    .min(6, "Має бути 6 і більше символів"),
 
   phoneNumber: yup
     .string()
-    .matches(
-      RegExp("\\+38\\(0\\d{2}\\)\\d{3}-\\d{2}-\\d{2}"),
-      "Некорректний номер телефона. Приклад +38(066)999-88-77"
-    )
+    .matches(RegExp("\\+38\\(0\\d{2}\\)\\d{3}-\\d{2}-\\d{2}"), {
+      message: "Некорректний номер телефона. Приклад +38(066)999-88-77",
+      excludeEmptyString: true,
+    })
     .when("desiredCommunicationWay", {
       is: DesiredCommunication.ByPhone,
       then: (schema) => schema.required(desiredCommunicationFieldCantBeEmpty),
@@ -71,6 +83,9 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
       then: (schema) => schema.required(desiredCommunicationFieldCantBeEmpty),
     }),
 
+  /**
+   * Documents
+   */
   documentType: yup
     .string()
     .oneOf(
@@ -112,18 +127,18 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
   documentIssueDate: dateSchema,
   documentExpireDate: yup
     .date()
+    .nullable()
+    .transform((curr, orig) => (orig === "" ? null : curr))
     .min("1900-01-01", "Некорректне значення, має бути 1900-01-01 або пізніше")
     .max(
       "2100-01-01",
       "Некорректне значення, має бути 2100-01-01 або раніше"
     ) as unknown as RequiredStringSchema<string>,
   documentOrigin: yup.string().required(fieldCantBeEmpty),
-  documentNumber: yup
-    .string()
-    .matches(
-      RegExp("\\d{8}-\\d{5}"),
-      "Некорректний номер, приклад 19900101-12345"
-    ),
+  documentNumber: yup.string().matches(RegExp("\\d{8}-\\d{5}"), {
+    message: "Некорректний номер, приклад 19900101-12345",
+    excludeEmptyString: true,
+  }),
 });
 
 export const validate = async (
