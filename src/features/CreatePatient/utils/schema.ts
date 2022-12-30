@@ -25,12 +25,12 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
   firstName: yup.string().required(fieldCantBeEmpty),
   patronymic: yup
     .string()
-    .when("$hasPatronymic", ([hasPatronymic], schema) =>
+    .when("$hasPatronymic", (hasPatronymic, schema) =>
       hasPatronymic ? schema.required(fieldCantBeEmpty) : schema
     ),
   VATNumber: yup
     .string()
-    .when("$hasVATNumber", ([hasVATNumber], schema) =>
+    .when("$hasVATNumber", (hasVATNumber, schema) =>
       hasVATNumber ? schema.required(fieldCantBeEmpty) : schema
     ),
   birthDate: dateSchema,
@@ -86,7 +86,7 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
   documentSeries: yup
     .string()
     .required(fieldCantBeEmpty)
-    .when("documentType", ([documentType], schema) => {
+    .when("documentType", (documentType, schema) => {
       switch (documentType) {
         case DocumentType.PaperPassport:
           return schema.matches(
@@ -127,14 +127,17 @@ export const validate = async (
   values: IFormSchema,
   context: { hasPatronymic: boolean; hasVATNumber: boolean }
 ) => {
-  console.log("inner validation called with", values);
-
   try {
     await schema.validate(values, { abortEarly: false, context });
-  } catch (e: unknown) {
-    console.log(e);
-
-    // TODO stack errors
-    return {};
+  } catch (e: any) {
+    if (e.name === "ValidationError" && Array.isArray(e.inner)) {
+      return (e.inner as Array<yup.ValidationError>).reduce(
+        (acc, { path, message }) => {
+          acc[path!] = message;
+          return acc;
+        },
+        {} as Record<string, string>
+      );
+    }
   }
 };

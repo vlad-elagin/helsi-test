@@ -2,12 +2,6 @@ import { patternize } from "string-patternizer";
 
 import { IFormSchema } from "../types";
 
-export const defaultFormState: Partial<IFormSchema> = {
-  gender: "",
-  desiredCommunicationWay: "",
-  documentType: "",
-};
-
 export const phoneNumberMask = "\\+38(0dd)ddd-dd-dd";
 export const documentNumberMask = "dddddddd-ddddd";
 

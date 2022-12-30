@@ -22,6 +22,7 @@ export const DocumentDataForm: React.FC = () => {
                 shrinkLabel
                 selectOptions={documentTypeOptions}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -32,7 +33,11 @@ export const DocumentDataForm: React.FC = () => {
             parse={(val) => val.toUpperCase()}
           >
             {(props) => (
-              <Input label="Серія (за наявності), номер" {...props.input} />
+              <Input
+                label="Серія (за наявності), номер"
+                {...props.input}
+                meta={props.meta}
+              />
             )}
           </Field>
         </Grid>
@@ -48,6 +53,7 @@ export const DocumentDataForm: React.FC = () => {
                   max: new Date().toISOString().split("T")[0],
                 }}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -64,6 +70,7 @@ export const DocumentDataForm: React.FC = () => {
                   max: "2100-01-01",
                 }}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -71,7 +78,12 @@ export const DocumentDataForm: React.FC = () => {
         <Grid xs={12} md={6}>
           <Field name="documentOrigin">
             {(props) => (
-              <Input label="Ким видано*" shrinkLabel {...props.input} />
+              <Input
+                label="Ким видано*"
+                shrinkLabel
+                {...props.input}
+                meta={props.meta}
+              />
             )}
           </Field>
         </Grid>
@@ -86,6 +98,7 @@ export const DocumentDataForm: React.FC = () => {
                 shrinkLabel
                 placeholder="РРРРММДД-ХХХХХ"
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>

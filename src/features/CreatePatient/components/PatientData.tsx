@@ -35,13 +35,25 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
         <Grid xs={12} md={6} lg={4}>
           <Field name="lastName">
             {(props) => (
-              <Input label="Прізвище*" shrinkLabel {...props.input} />
+              <Input
+                label="Прізвище*"
+                shrinkLabel
+                {...props.input}
+                meta={props.meta}
+              />
             )}
           </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
           <Field name="firstName">
-            {(props) => <Input label="Імʼя*" shrinkLabel {...props.input} />}
+            {(props) => (
+              <Input
+                label="Імʼя*"
+                shrinkLabel
+                {...props.input}
+                meta={props.meta}
+              />
+            )}
           </Field>
         </Grid>
         <Grid xs={12} md={6} lg={4}>
@@ -53,6 +65,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 switchValue={hasPatronymic}
                 onSwitchToggle={onSwitchToggle(setHasPatronymic)}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -66,6 +79,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 switchValue={hasVATNumber}
                 onSwitchToggle={onSwitchToggle(setHasVATNumber)}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -82,6 +96,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 }}
                 shrinkLabel
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -95,18 +110,31 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 select
                 selectOptions={genderOptions}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
           <Field name="birthCountry">
-            {(props) => <Input label="Країна народження*" {...props.input} />}
+            {(props) => (
+              <Input
+                label="Країна народження*"
+                {...props.input}
+                meta={props.meta}
+              />
+            )}
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
           <Field name="birthPlace">
-            {(props) => <Input label="Місце народження" {...props.input} />}
+            {(props) => (
+              <Input
+                label="Місце народження"
+                {...props.input}
+                meta={props.meta}
+              />
+            )}
           </Field>
         </Grid>
         <Grid xs={12} md={6}>
@@ -118,6 +146,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 shrinkLabel
                 selectOptions={desiredCommunicationWayOptions}
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -128,6 +157,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
               <Input
                 label="Секретне слово (не менше 6 символів)*"
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -143,6 +173,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 shrinkLabel
                 placeholder="+38(___)___-__-__"
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>
@@ -155,6 +186,7 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
                 shrinkLabel
                 placeholder="example@example.com"
                 {...props.input}
+                meta={props.meta}
               />
             )}
           </Field>

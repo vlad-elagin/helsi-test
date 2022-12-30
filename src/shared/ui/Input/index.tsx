@@ -9,12 +9,14 @@ import {
   InputProps,
   SelectProps,
 } from "@mui/material";
+import { FieldMetaState } from "react-final-form";
 
 interface IInputProps extends StandardTextFieldProps {
   shrinkLabel?: boolean;
   switchValue?: boolean;
   onSwitchToggle?: (toggled: boolean) => void;
   selectOptions?: Array<{ label: string; value: string }>;
+  meta: FieldMetaState<any>;
 }
 
 export const Input: React.FC<IInputProps> = ({
@@ -22,6 +24,7 @@ export const Input: React.FC<IInputProps> = ({
   switchValue,
   onSwitchToggle,
   selectOptions,
+  meta,
   ...inputProps
 }) => {
   const InputLabelProps: Partial<InputLabelProps> = {
@@ -43,6 +46,8 @@ export const Input: React.FC<IInputProps> = ({
   return (
     <TextField
       {...inputProps}
+      error={meta.modified && Boolean(meta.error)}
+      helperText={meta.modified && meta.error}
       InputLabelProps={InputLabelProps}
       SelectProps={SelectProps}
       InputProps={InputProps}

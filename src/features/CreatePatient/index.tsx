@@ -30,8 +30,6 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
       onSubmit={onSubmit}
       initialValues={initialValues}
       validate={(values) => {
-        console.log("outer validation called");
-
         return validate(values, {
           hasPatronymic,
           hasVATNumber,
