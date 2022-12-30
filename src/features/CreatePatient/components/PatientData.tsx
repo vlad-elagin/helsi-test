@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { Field } from "react-final-form";
 
-import { Input, FormSection } from "shared/ui";
+import { Input, FormSection, InputWithSwitch } from "shared/ui";
 import {
   desiredCommunicationWayOptions,
   genderOptions,
@@ -59,13 +59,18 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
         <Grid xs={12} md={6} lg={4}>
           <Field name="patronymic">
             {(props) => (
-              <Input
+              <InputWithSwitch
                 label="По батькові*"
                 shrinkLabel
                 switchValue={hasPatronymic}
                 onSwitchToggle={onSwitchToggle(setHasPatronymic)}
                 {...props.input}
                 meta={props.meta}
+                helperText={
+                  !hasPatronymic
+                    ? "Немає по батькові згідно документів"
+                    : undefined
+                }
               />
             )}
           </Field>
@@ -73,13 +78,18 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
         <Grid xs={12} md={6} lg={4}>
           <Field name="VATNumber">
             {(props) => (
-              <Input
+              <InputWithSwitch
                 label="РНОКПП (ІПН)*"
                 shrinkLabel
                 switchValue={hasVATNumber}
                 onSwitchToggle={onSwitchToggle(setHasVATNumber)}
                 {...props.input}
                 meta={props.meta}
+                helperText={
+                  !hasVATNumber
+                    ? "Немає ІПН за віком чи має відмітку в паспорті"
+                    : undefined
+                }
               />
             )}
           </Field>

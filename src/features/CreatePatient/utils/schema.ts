@@ -10,6 +10,8 @@ import {
 import { IFormSchema } from "../types";
 
 const fieldCantBeEmpty = "Поле не може бути пустим";
+const desiredCommunicationFieldCantBeEmpty =
+  "Поле обраного способу звʼязку не може бути пустим";
 
 const dateSchema = yup
   .date()
@@ -30,6 +32,7 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
     ),
   VATNumber: yup
     .string()
+    .matches(RegExp("\\d{10}"), "ІПН має складатися з 10 цифр")
     .when("$hasVATNumber", (hasVATNumber, schema) =>
       hasVATNumber ? schema.required(fieldCantBeEmpty) : schema
     ),
@@ -58,14 +61,14 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
     )
     .when("desiredCommunicationWay", {
       is: DesiredCommunication.ByPhone,
-      then: (schema) => schema.required(fieldCantBeEmpty),
+      then: (schema) => schema.required(desiredCommunicationFieldCantBeEmpty),
     }),
   emailAddress: yup
     .string()
     .email("Некорректна електронна адреса. Приклад john.doe@ukr.net")
     .when("desiredCommunicationWay", {
       is: DesiredCommunication.ByEmail,
-      then: (schema) => schema.required(fieldCantBeEmpty),
+      then: (schema) => schema.required(desiredCommunicationFieldCantBeEmpty),
     }),
 
   documentType: yup
