@@ -18,9 +18,6 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
   onClose,
 }) => {
   const onSubmit = (values: IFormSchema) => {
-    console.log("submitting!");
-    console.log(values);
-
     onSavePatient(JSON.stringify(values));
   };
 
