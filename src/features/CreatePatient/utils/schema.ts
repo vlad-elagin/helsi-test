@@ -89,9 +89,13 @@ const schema: yup.SchemaOf<IPatientData> = yup.object({
   documentNumber: yup.string().documentNumber(),
 });
 
+export interface IValidationContext {
+  hasPatronymic: boolean;
+  hasVATNumber: boolean;
+}
 export const validate = async (
   values: IFormSchema,
-  context: { hasPatronymic: boolean; hasVATNumber: boolean }
+  context: IValidationContext
 ) => {
   try {
     await schema.validate(values, { abortEarly: false, context });

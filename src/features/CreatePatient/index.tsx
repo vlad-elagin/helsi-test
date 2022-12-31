@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { DocumentDataForm, PatientDataForm } from "./components";
 import { IFormSchema } from "./types";
 import { initialValues } from "./utils";
-import { validate } from "./utils/schema";
+import { IValidationContext, validate } from "./utils/schema";
 
 interface ICreatePatientProps {
   onSavePatient: (data: string) => void;
@@ -21,29 +21,23 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
     onSavePatient(JSON.stringify(values));
   };
 
-  const [hasPatronymic, setHasPatronymic] = React.useState(true);
-  const [hasVATNumber, setHasVATNumber] = React.useState(true);
+  const validationContextRef = React.useRef<IValidationContext>({
+    hasPatronymic: true,
+    hasVATNumber: true,
+  });
 
   return (
     <Form<IFormSchema>
       onSubmit={onSubmit}
       initialValues={initialValues}
       validate={(values) => {
-        return validate(values, {
-          hasPatronymic,
-          hasVATNumber,
-        });
+        return validate(values, validationContextRef.current);
       }}
       subscription={{}}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <PatientDataForm
-            hasPatronymic={hasPatronymic}
-            setHasPatronymic={setHasPatronymic}
-            hasVATNumber={hasVATNumber}
-            setHasVATNumber={setHasVATNumber}
-          />
+          <PatientDataForm validationContext={validationContextRef} />
 
           <DocumentDataForm />
 

@@ -10,24 +10,19 @@ import {
   phoneNumberMask,
   parseInputValue,
 } from "../utils";
-
-type SwitchToggler = (val: boolean) => void;
+import { IValidationContext } from "../utils/schema";
 
 interface IPatientDataFormProps {
-  hasPatronymic: boolean;
-  setHasPatronymic: SwitchToggler;
-  hasVATNumber: boolean;
-  setHasVATNumber: SwitchToggler;
+  validationContext: React.MutableRefObject<IValidationContext>;
 }
 
 export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
-  hasPatronymic,
-  hasVATNumber,
-  setHasPatronymic,
-  setHasVATNumber,
+  validationContext,
 }) => {
-  const onSwitchToggle = (func: SwitchToggler) => {
-    return (val: boolean) => func(val);
+  const onSwitchToggle = (field: keyof IValidationContext) => {
+    return (val: boolean) => {
+      validationContext.current[field] = val;
+    };
   };
 
   return (
@@ -63,15 +58,11 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
               <InputWithSwitch
                 label="По батькові*"
                 shrinkLabel
-                switchValue={hasPatronymic}
-                onSwitchToggle={onSwitchToggle(setHasPatronymic)}
+                switchValue={validationContext.current.hasPatronymic}
+                onSwitchToggle={onSwitchToggle("hasPatronymic")}
                 {...props.input}
                 meta={props.meta}
-                helperText={
-                  !hasPatronymic
-                    ? "Немає по батькові згідно документів"
-                    : undefined
-                }
+                helperText="Немає по батькові згідно документів"
               />
             )}
           </Field>
@@ -85,15 +76,11 @@ export const PatientDataForm: React.FC<IPatientDataFormProps> = ({
               <InputWithSwitch
                 label="РНОКПП (ІПН)*"
                 shrinkLabel
-                switchValue={hasVATNumber}
-                onSwitchToggle={onSwitchToggle(setHasVATNumber)}
+                switchValue={validationContext.current.hasVATNumber}
+                onSwitchToggle={onSwitchToggle("hasVATNumber")}
                 {...props.input}
                 meta={props.meta}
-                helperText={
-                  !hasVATNumber
-                    ? "Немає ІПН за віком чи має відмітку в паспорті"
-                    : undefined
-                }
+                helperText="Немає ІПН за віком чи має відмітку в паспорті"
               />
             )}
           </Field>

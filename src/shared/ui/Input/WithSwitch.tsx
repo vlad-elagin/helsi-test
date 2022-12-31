@@ -7,25 +7,21 @@ import { Input } from "./Input";
 export const InputWithSwitch: React.FC<IWithSwitchProps> = ({
   switchValue,
   onSwitchToggle,
+  helperText,
   ...rest
 }) => {
-  const [readOnly, setReadOnly] = React.useState(!switchValue);
-
-  React.useEffect(() => {
-    // reset the value for disabled switch and make input readonly
-    if (!switchValue) {
-      // @ts-expect-error onChange handler is overriden by final-form
-      // and should accept plain string as argument
-      rest.onChange("");
-      setReadOnly(true);
-    } else {
-      setReadOnly(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [switchValue]);
+  const [switchIsOn, setSwitch] = React.useState(switchValue);
 
   const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
+    // reset the value for disabled switch and make input readonly
+    if (!checked) {
+      // @ts-expect-error onChange handler is overriden by final-form
+      // and should accept plain string as argument
+      rest.onChange("");
+    }
+
+    setSwitch(checked);
     onSwitchToggle(checked);
   };
 
@@ -34,7 +30,7 @@ export const InputWithSwitch: React.FC<IWithSwitchProps> = ({
       <InputAdornment position="end">
         <Switch
           size="small"
-          checked={switchValue}
+          checked={switchIsOn}
           onChange={handleSwitchToggle}
         />
       </InputAdornment>
@@ -44,8 +40,13 @@ export const InputWithSwitch: React.FC<IWithSwitchProps> = ({
   return (
     <Input
       {...rest}
-      inputProps={{ ...(rest.inputProps || {}), readOnly, disabled: readOnly }}
+      inputProps={{
+        ...(rest.inputProps || {}),
+        readOnly: !switchIsOn,
+        disabled: !switchIsOn,
+      }}
       InputProps={{ ...(rest.InputProps || {}), ...InputProps }}
+      helperText={switchIsOn ? undefined : helperText}
     />
   );
 };
