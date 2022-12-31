@@ -34,6 +34,7 @@ export const CreatePatient: React.FC<ICreatePatientProps> = ({
           hasVATNumber,
         });
       }}
+      subscription={{}}
     >
       {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
