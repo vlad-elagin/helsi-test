@@ -9,7 +9,7 @@ import {
   documentTypeOptions,
 } from "../utils";
 
-export const DocumentDataForm: React.FC = () => {
+export const DocumentDataForm: React.FC = React.memo(() => {
   const [formEnabled, setFormEnabled] = React.useState(false);
   const {
     input: { value: documentType },
@@ -122,4 +122,4 @@ export const DocumentDataForm: React.FC = () => {
       </Grid>
     </FormSection>
   );
-};
+});

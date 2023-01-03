@@ -14,7 +14,9 @@ export const Input: React.FC<IInputProps> = React.memo(
     };
 
     const shouldShowError =
-      (meta.modified || meta.submitFailed) && Boolean(meta.error);
+      (meta.modified || meta.submitFailed) &&
+      Boolean(meta.error) &&
+      !inputProps.disabled;
 
     return (
       <TextField
